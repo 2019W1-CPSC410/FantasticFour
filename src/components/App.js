@@ -1,11 +1,11 @@
 import React from 'react';
 import '../css/App.css';
-import MapComponent from './MapComponent';
+import TextAreaComponent from './TextAreaComponent'
 
 function App() {
   return (
     <div className="App">
-      <MapComponent />
+      <TextAreaComponent/>
     </div>
   );
 }

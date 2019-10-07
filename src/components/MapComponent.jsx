@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import L from 'leaflet';
+import MapStore from '../utils/MapStore'
+import Marker from '../ast/Marker'
 
 const styles = {
   mapContainer: {
@@ -18,8 +20,9 @@ class Map extends Component {
   }
 
   componentDidMount() {
+    // TODO: create AST and evaluate here from tokens passed in as props.tokens
     // Create map L.map() returns a map object
-    const map = L.map('map', {
+    MapStore.setMap(L.map('map', {
       center: [49.25, -123.12],
       zoom: 13,
       layers: [
@@ -27,23 +30,14 @@ class Map extends Component {
           attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }),
       ]
-    });
-
+    }));
+    var map = MapStore.getMap();
     // TODO: Remove when interactivity is added, this is just for PoC
-    L.marker([49.25, -123.12]).addTo(map);
-
+    var marker = new Marker();
+    marker.evaluate();
     this.setState({
       map,
     });
-  }
-
-  // TODO: Implement addMarker in DSL
-  handleAddMarker = () => {
-    const { map } = this.state;
-    // TODO: coords should be passed as a parameter
-    const coords = [49.25, -123.12];
-
-    L.marker(coords).addTo(map);
   }
 
   render() {
