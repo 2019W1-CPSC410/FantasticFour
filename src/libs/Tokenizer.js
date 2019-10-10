@@ -22,9 +22,7 @@ class Tokenizer {
         tokenizedProgram = tokenizedProgram.replace(/".*"/g, "_$_");
 
         // prevents leading 'lat' in lat lon from combining with variable name token
-        tokenizedProgram = tokenizedProgram.replace(/( \d+)/g, function(m){
-            return "_" + m;
-        });
+        tokenizedProgram = tokenizedProgram.replace(/[-]*\d+\.\d+/g, function(m){ return "_" + m + "_"; });
         console.log(tokenizedProgram);
 
         this.literals.forEach((s) => {
@@ -39,7 +37,7 @@ class Tokenizer {
             tokenizedProgram = tokenizedProgram.replace(/\$/, text);
         });
 
-        tokenizedProgram = tokenizedProgram.replace(/__/g, "_");
+        tokenizedProgram = tokenizedProgram.replace(/[_]+/g, "_");
         console.log(tokenizedProgram);
         let tempTokens = tokenizedProgram.split("_");
         this.tokens = tempTokens.slice(1, tempTokens.length -1);
