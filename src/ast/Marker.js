@@ -1,16 +1,17 @@
-import L from 'leaflet';
 import MapStore from '../utils/MapStore'
 
 class Marker {
-    constructor() {}
+    constructor() {
+        this.latlon = [49.25, -123.12];
+    }
 
-    addMarker (latlon) {
-        L.marker(latlon).addTo(MapStore.getMap());
-    };
+    parse () {
 
+    }
 
     evaluate() {
-        this.addMarker([49.25, -123.12]);
+        let mapStore = MapStore.getInstance();
+        mapStore.addMarker(this.latlon);
     }
 }
 

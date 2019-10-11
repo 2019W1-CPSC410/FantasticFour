@@ -22,7 +22,8 @@ class Map extends Component {
   componentDidMount() {
     // TODO: create AST and evaluate here from tokens passed in as props.tokens
     // Create map L.map() returns a map object
-    MapStore.setMap(L.map('map', {
+    let mapStore = MapStore.getInstance();
+    mapStore.setMap(L.map('map', {
       center: [49.25, -123.12],
       zoom: 13,
       layers: [
@@ -31,13 +32,14 @@ class Map extends Component {
         }),
       ]
     }));
-    var map = MapStore.getMap();
     // TODO: Remove when interactivity is added, this is just for PoC
     var marker = new Marker();
     marker.evaluate();
-    this.setState({
-      map,
-    });
+    mapStore.addPolygon([
+        [49.25, -123.12],
+        [49.2505, -123.11],
+        [49.2495, -123.12],
+    ]);
   }
 
   render() {
