@@ -32,9 +32,8 @@ class Circle {
         const opacityOption = this.options.find(option => option.type === 'opacity') || {};
         const radiusOption = this.options.find(option => option.type === 'radius') || {};
         let mapStore = MapStore.getInstance();
-        let latlon = VarStore.getType(this.latlon);
         let circle = mapStore.addCircle(
-            latlon.evaluate(),
+            this.latlon,
             colorOption.value,
             opacityOption.opacity,
             radiusOption.radius
