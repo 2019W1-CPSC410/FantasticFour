@@ -5,7 +5,7 @@ import Tokenizer from '../libs/Tokenizer';
 class Circle {
     constructor() {
         this.name = "";
-        this.latlon = null;
+        this.latlon = [];
         this.options = [];
     }
 
