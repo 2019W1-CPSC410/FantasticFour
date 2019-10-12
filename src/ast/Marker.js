@@ -1,11 +1,13 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
 import Tokenizer from '../libs/Tokenizer';
+import Option from './Option';
 
 class Marker {
     constructor() {
         this.name = ''
         this.latlon = [];
+        this.options = [];
     }
 
     parse () {
