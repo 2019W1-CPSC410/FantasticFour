@@ -26,6 +26,7 @@ class Marker {
             option.parse();
             this.options.push(option);
         }
+        Tokenizer.getAndCheckNext(';');
     }
 
     evaluate() {

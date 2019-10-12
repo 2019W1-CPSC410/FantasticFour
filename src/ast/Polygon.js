@@ -31,6 +31,7 @@ class Polygon {
             option.parse();
             this.options.push(option);
         }
+        Tokenizer.getAndCheckNext(';');
     }
 
     evaluate() {
