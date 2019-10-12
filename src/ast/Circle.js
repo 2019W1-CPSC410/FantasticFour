@@ -10,7 +10,7 @@ class Circle {
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('marker');
+        Tokenizer.getAndCheckNext('circle');
         this.name = Tokenizer.getNext();
         let latlon = [];
         if (typeof Tokenizer.checkNext() === 'number') {
