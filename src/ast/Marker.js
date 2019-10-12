@@ -4,7 +4,7 @@ import Tokenizer from '../libs/Tokenizer';
 
 class Marker {
     constructor() {
-        this.name = "";
+        this.name = ''
         this.latlon = null;
     }
 
@@ -16,15 +16,19 @@ class Marker {
             latlon.push(Tokenizer.getNext()); // lat
             latlon.push(Tokenizer.getNext()); // lon
         } else {
-            latlon = Tokenizer.getNext();
+            latlon = VarStore.getValue(Tokenizer.getNext());
         }
         this.latlon = latlon;
+        while (Tokenizer.checkNext() !== ';') {
+            let option = new Option();
+            option.parse();
+            this.options.push(option);
+        }
     }
 
     evaluate() {
         let mapStore = MapStore.getInstance();
-        let latlon = VarStore.getType(this.latlon);
-        let marker = mapStore.addMarker(latlon.evaluate());
+        let marker = mapStore.addMarker(this.latlon);
         if (this.name) {
             VarStore.setMapObject(this.name, marker);
         }
