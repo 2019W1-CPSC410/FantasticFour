@@ -1,7 +1,7 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
 
-class Marker {
+class Latlon {
     constructor() {
         this.name = "";
         this.lat = null;
@@ -29,4 +29,4 @@ class Marker {
     }
 }
 
-export { Marker as default}
+export { Latlon as default}
