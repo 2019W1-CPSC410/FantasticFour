@@ -2,13 +2,14 @@ import Tokenizer from '../libs/Tokenizer';
 
 class Option {
   constructor() {
-    this.optionType = '';
-    this.optionValue = '';
+    this.type = '';
+    this.value = '';
   }
 
   parse() {
-    this.optionType = Tokenizer.getNext();
-    this.optionValue = Tokenizer.getNext();
+    Tokenizer.getAndCheckNext('with');
+    this.type = Tokenizer.getNext(); // option types: color, opacity, radius, etc
+    this.value = Tokenizer.getNext(); // option values: 'red', '50%', 1, etc
   }
 
   evaluate() {

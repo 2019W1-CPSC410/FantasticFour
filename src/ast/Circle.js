@@ -6,10 +6,7 @@ class Circle {
     constructor() {
         this.name = "";
         this.latlon = null;
-        this.color = "red";
-        this.opacity = 0.5;
-        this.radius = 50;
-        this.option = null;
+        this.options = [];
     }
 
     parse () {
@@ -20,18 +17,28 @@ class Circle {
             latlon.push(Tokenizer.getNext()); // lat
             latlon.push(Tokenizer.getNext()); // lon
         } else {
-            latlon = Tokenizer.getNext();
+            latlon = VarStore.getValue(Tokenizer.getNext());
         }
         this.latlon = latlon;
-        this.option = new Option();
-        this.option.parse();
+        while (Tokenizer.checkNext() !== ';') {
+            let option = new Option();
+            option.parse();
+            this.options.push(option);
+        }
     }
 
     evaluate() {
-        const { color, opacity, radius } = this.option;
+        const colorOption = this.options.find(option => option.type === 'color') || {};
+        const opacityOption = this.options.find(option => option.type === 'opacity') || {};
+        const radiusOption = this.options.find(option => option.type === 'radius') || {};
         let mapStore = MapStore.getInstance();
         let latlon = VarStore.getType(this.latlon);
-        let circle = mapStore.addCircle(latlon.evaluate(), color, opacity, radius);
+        let circle = mapStore.addCircle(
+            latlon.evaluate(),
+            colorOption.value,
+            opacityOption.opacity,
+            radiusOption.radius
+        );
         if (this.name) {
             VarStore.setMapObject(this.name, circle);
         }
