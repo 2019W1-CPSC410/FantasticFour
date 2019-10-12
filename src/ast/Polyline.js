@@ -35,7 +35,6 @@ class Polyline {
     setColor(color) {
         this.color = color;
     }
-
 }
 
 export { Polyline as default}
