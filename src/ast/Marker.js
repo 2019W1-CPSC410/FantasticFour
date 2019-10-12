@@ -1,5 +1,6 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
+import Tokenizer from '../libs/Tokenizer';
 
 class Marker {
     constructor() {
@@ -8,7 +9,16 @@ class Marker {
     }
 
     parse () {
-
+        Tokenizer.getAndCheckNext('marker');
+        this.name = Tokenizer.getNext();
+        let latlon = [];
+        if (typeof Tokenizer.checkNext() === 'number') {
+            latlon.push(Tokenizer.getNext()); // lat
+            latlon.push(Tokenizer.getNext()); // lon
+        } else {
+            latlon = Tokenizer.getNext();
+        }
+        this.latlon = latlon;
     }
 
     evaluate() {
