@@ -1,5 +1,6 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
+import Tokenizer from '../libs/Tokenizer';
 
 class Link {
     constructor() {
@@ -7,7 +8,12 @@ class Link {
         this.second_name = "";
     }
 
-    parse () {}
+    parse () {
+        Tokenizer.getAndCheckNext('link');
+        this.first_name = Tokenizer.getNext();
+        Tokenizer.getAndCheckNext('with');
+        this.second_name = Tokenizer.getNext();
+    }
 
     evaluate() {
         let mapStore = MapStore.getInstance();
