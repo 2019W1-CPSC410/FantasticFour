@@ -1,8 +1,10 @@
-import MapStore from '../utils/MapStore'
+import MapStore from '../utils/MapStore';
+import VarStore from '../utils/VarStore';
 
 class Marker {
     constructor() {
-        this.latlon = [49.25, -123.12];
+        this.name = "";
+        this.latlon = null;
     }
 
     parse () {
@@ -11,7 +13,19 @@ class Marker {
 
     evaluate() {
         let mapStore = MapStore.getInstance();
-        mapStore.addMarker(this.latlon);
+        let latlon = VarStore.getType(this.latlon);
+        let marker = mapStore.addMarker(latlon.evaluate());
+        if (this.name) {
+            VarStore.setMapObject(this.name, marker);
+        }
+    }
+
+    setLocation(latlon) {
+        this.latlon = latlon[0];
+    }
+
+    setName(name) {
+        this.name = name;
     }
 }
 
