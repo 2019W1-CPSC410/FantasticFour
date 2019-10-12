@@ -1,5 +1,6 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
+import Tokenizer from '../libs/Tokenizer';
 
 class Circle {
     constructor() {
@@ -8,14 +9,29 @@ class Circle {
         this.color = "red";
         this.opacity = 0.5;
         this.radius = 50;
+        this.option = null;
     }
 
-    parse () {}
+    parse () {
+        Tokenizer.getAndCheckNext('marker');
+        this.name = Tokenizer.getNext();
+        let latlon = [];
+        if (typeof Tokenizer.checkNext() === 'number') {
+            latlon.push(Tokenizer.getNext()); // lat
+            latlon.push(Tokenizer.getNext()); // lon
+        } else {
+            latlon = Tokenizer.getNext();
+        }
+        this.latlon = latlon;
+        this.option = new Option();
+        this.option.parse();
+    }
 
     evaluate() {
+        const { color, opacity, radius } = this.option;
         let mapStore = MapStore.getInstance();
         let latlon = VarStore.getType(this.latlon);
-        let circle = mapStore.addCircle(latlon.evaluate(), this.color, this.opacity, this.radius);
+        let circle = mapStore.addCircle(latlon.evaluate(), color, opacity, radius);
         if (this.name) {
             VarStore.setMapObject(this.name, circle);
         }
