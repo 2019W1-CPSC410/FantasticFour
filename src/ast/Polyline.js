@@ -1,24 +1,49 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
+import Option from './Option';
+import Tokenizer from '../libs/Tokenizer';
 
 class Polyline {
     constructor() {
-        this.name = "";
+        this.name = '';
         this.latlons = [];
-        this.color = "red";
+        this.options = [];
     }
 
-    parse () {}
+    parse () {
+        Tokenizer.getAndCheckNext('polyline');
+        this.name = Tokenizer.getNext();
+        Tokenizer.getAndCheckNext('[');
+        let latlons = [];
+        while (Tokenizer.checkNext() !== ']') {
+            let latlon = [];
+            if (typeof Tokenizer.checkNext() === 'number') {
+                latlon.push(Tokenizer.getNext()); // lat
+                latlon.push(Tokenizer.getNext()); // lon
+            } else {
+                latlon = VarStore.getValue(Tokenizer.getNext());
+            }
+            latlons.push(latlon);
+        }
+        this.latlons = latlons;
+        while (Tokenizer.checkNext() !== ';') {
+            let option = new Option();
+            option.parse();
+            this.options.push(option);
+        }
+        Tokenizer.getAndCheckNext(';');
+    }
 
     evaluate() {
         let mapStore = MapStore.getInstance();
         let latlons = [];
         this.latlons.forEach((latlon) => {
-            latlon = VarStore.getType(latlon);
-            latlons.push(latlon.evaluate);
+            latlons.push(latlon);
         });
 
-        let polyline = mapStore.addPolyline(latlons, this.color);
+        const colorOption = this.options.find(option => option.type === 'color') || {};
+
+        let polyline = mapStore.addPolyline(latlons, colorOption.value);
         if (this.name) {
             VarStore.setMapObject(this.name, polyline);
         }

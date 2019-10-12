@@ -38,9 +38,7 @@ class Polygon {
         let mapStore = MapStore.getInstance();
         let latlons = [];
         this.latlons.forEach((latlon) => {
-            latlon = VarStore.getType(latlon);
-
-            latlons.push(latlon.evaluate);
+            latlons.push(latlon);
         });
 
         const colorOption = this.options.find(option => option.type === 'color') || {};
