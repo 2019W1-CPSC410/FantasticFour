@@ -13,7 +13,7 @@ const styles = {
     }
 };
 
-const literals = ["create map", "end", "centered",
+const literals = ["create map", "end", "centered at",
     "titled", "legend item", "marker", "polygon",
     "circle", "polyline", "latlon", "popup", "text", "color",
     "opacity", "with", "radius", " add ", " at ", " to ", "zoom level", ";"
