@@ -33,13 +33,13 @@ class Map extends Component {
       ]
     }));
     // TODO: Remove when interactivity is added, this is just for PoC
-    var marker = new Marker();
-    marker.evaluate();
-    mapStore.addPolygon([
-        [49.25, -123.12],
-        [49.2505, -123.11],
-        [49.2495, -123.12],
-    ]);
+    // var marker = new Marker();
+    // marker.evaluate();
+    // mapStore.addPolygon([
+    //     [49.25, -123.12],
+    //     [49.2505, -123.11],
+    //     [49.2495, -123.12],
+    // ]);
   }
 
   render() {
