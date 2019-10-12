@@ -11,6 +11,7 @@ class VarDec {
     this.color = null;
     this.opacity = null;
     this.radius = null;
+    this.text = "";
     this.location = null;
     this.locations = []; // [ [LAT, LON] || VAR_NAME, [LAT, LON] ]
   }
@@ -36,7 +37,24 @@ class VarDec {
   }
 
   evaluate() {
-
+    if (this.locations) {
+      this.type.setLocation(this.locations);
+    }
+    if (this.color) {
+      this.type.setColor(this.color);
+    }
+    if (this.radius) {
+      this.type.setRadius(this.radius);
+    }
+    if (this.opacity) {
+      this.type.setOpacity(this.opacity);
+    }
+    if (this.text) {
+      this.type.setText(this.text);
+    }
+    this.type.setName(this.name);
+    VarStore.setType(this.name, this.type);
+    this.type.evaluate();
   }
 }
 export { VarDec as default }
