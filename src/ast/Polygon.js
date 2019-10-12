@@ -1,15 +1,37 @@
 import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
+import Option from './Option';
+import Tokenizer from '../libs/Tokenizer';
 
 class Polygon {
     constructor() {
-        this.name = "";
+        this.name = '';
         this.latlons = [];
-        this.color = "red";
-        this.opacity = 0.5;
+        this.options = [];
     }
 
-    parse () {}
+    parse () {
+        Tokenizer.getAndCheckNext('polygon');
+        this.name = Tokenizer.getNext();
+        Tokenizer.getAndCheckNext('[');
+        let latlons = [];
+        while (Tokenizer.checkNext() !== ']') {
+            let latlon = [];
+            if (typeof Tokenizer.checkNext() === 'number') {
+                latlon.push(Tokenizer.getNext()); // lat
+                latlon.push(Tokenizer.getNext()); // lon
+            } else {
+                latlon = VarStore.getValue(Tokenizer.getNext());
+            }
+            latlons.push(latlon);
+        }
+        this.latlons = latlons;
+        while (Tokenizer.checkNext() !== ';') {
+            let option = new Option();
+            option.parse();
+            this.options.push(option);
+        }
+    }
 
     evaluate() {
         let mapStore = MapStore.getInstance();
@@ -20,7 +42,10 @@ class Polygon {
             latlons.push(latlon.evaluate);
         });
 
-        let polygon = mapStore.addPolygon(latlons, this.color, this.opacity);
+        const colorOption = this.options.find(option => option.type === 'color') || {};
+        const opacityOption = this.options.find(option => option.type === 'opacity') || {};
+
+        let polygon = mapStore.addPolygon(latlons, colorOption.value, opacityOption.value);
         if (this.name) {
             VarStore.setMapObject(this.name, polygon);
         }
