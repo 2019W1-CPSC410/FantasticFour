@@ -20,7 +20,7 @@ class Polyline {
         let latlons = [];
         while (tokenizer.checkNext() !== ']') {
             let latlon = [];
-            if (typeof tokenizer.checkNext() === 'number') {
+            if (!isNaN(tokenizer.checkNext())) {
                 latlon.push(tokenizer.getNext()); // lat
                 latlon.push(tokenizer.getNext()); // lon
             } else {

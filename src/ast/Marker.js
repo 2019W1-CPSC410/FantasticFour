@@ -18,7 +18,7 @@ class Marker {
         this.name = tokenizer.getNext();
         tokenizer.getAndCheckNext('at');
         let latlon = [];
-        if (typeof tokenizer.checkNext() === 'number') {
+        if (!isNaN(tokenizer.checkNext())) {
             latlon.push(tokenizer.getNext()); // lat
             latlon.push(tokenizer.getNext()); // lon
         } else {

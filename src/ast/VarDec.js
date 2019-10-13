@@ -25,7 +25,7 @@ class VarDec {
     const token = tokenizer.checkNext();
     while (!varTypes.includes(token) && token !== 'with') {
       let latlon = [];
-      if (typeof tokenizer.checkNext() === 'number') {
+      if (!isNaN(tokenizer.checkNext())) {
         latlon.push(tokenizer.getNext()); // lat
         latlon.push(tokenizer.getNext()); // lon
       } else {
