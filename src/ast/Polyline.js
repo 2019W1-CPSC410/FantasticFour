@@ -24,6 +24,10 @@ class Polyline {
                 latlon = VarStore.getValue(Tokenizer.getNext());
             }
             latlons.push(latlon);
+            // Multiple lat lons
+            if (Tokenizer.checkNext() === ',') {
+                Tokenizer.getAndCheckNext(',');
+            }
         }
         this.latlons = latlons;
         while (Tokenizer.checkNext() !== ';') {

@@ -13,9 +13,9 @@ class Polygon {
     parse () {
         Tokenizer.getAndCheckNext('polygon');
         this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext('[');
+        Tokenizer.getAndCheckNext('\[');
         let latlons = [];
-        while (Tokenizer.checkNext() !== ']') {
+        while (Tokenizer.checkNext() !== '\]') {
             let latlon = [];
             if (typeof Tokenizer.checkNext() === 'number') {
                 latlon.push(Tokenizer.getNext()); // lat
@@ -24,6 +24,10 @@ class Polygon {
                 latlon = VarStore.getValue(Tokenizer.getNext());
             }
             latlons.push(latlon);
+            // Multiple lat lons
+            if (Tokenizer.checkNext() === ',') {
+                Tokenizer.getAndCheckNext(',');
+            }
         }
         this.latlons = latlons;
         while (Tokenizer.checkNext() !== ';') {
