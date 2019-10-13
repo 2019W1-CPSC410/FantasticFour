@@ -43,8 +43,8 @@ class Program {
     }
 
     parse () {
+        tokenizer.getAndCheckNext('createmap');
         while (tokenizer.moreTokens()) {
-            tokenizer.getAndCheckNext('createmap');
             let s = this.getSubStatement();
             s.parse();
             this.statements.push(s);
