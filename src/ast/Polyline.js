@@ -30,12 +30,11 @@ class Polyline {
             }
         }
         this.latlons = latlons;
-        while (Tokenizer.checkNext() !== ';') {
+        while (Tokenizer.checkNext() !== 'with') {
             let option = new Option();
             option.parse();
             this.options.push(option);
         }
-        Tokenizer.getAndCheckNext(';');
     }
 
     evaluate() {

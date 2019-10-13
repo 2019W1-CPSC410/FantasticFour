@@ -21,12 +21,11 @@ class Circle {
             latlon = VarStore.getValue(Tokenizer.getNext());
         }
         this.latlon = latlon;
-        while (Tokenizer.checkNext() !== ';') {
+        while (Tokenizer.checkNext() === 'with') {
             let option = new Option();
             option.parse();
             this.options.push(option);
         }
-        Tokenizer.getAndCheckNext(';');
     }
 
     evaluate() {
