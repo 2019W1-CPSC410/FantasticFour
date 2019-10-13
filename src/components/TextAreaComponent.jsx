@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapComponent from './MapComponent';
 import { withStyles } from '@material-ui/styles';
 import Tokenizer from '../libs/Tokenizer';
+import Program from '../ast/Program';
 
 const styles = {
     textAreaContainer: {
@@ -38,8 +39,10 @@ class TextArea extends Component {
     handleSubmit(event) {
         //TODO: perform tokenization here, save to state!!
         alert('A map was submitted: ' + this.state.text);
-        let tokenizer = new Tokenizer(this.state.text, literals);
+        Tokenizer.makeTokenizer(this.state.text, literals);
         event.preventDefault();
+        let program = new Program();
+        program.parse();
     }
 
     render() {
