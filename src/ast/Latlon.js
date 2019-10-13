@@ -21,7 +21,7 @@ class Latlon {
 
     evaluate() {
         const latlon = [this.lat, this.lon];
-        VarStore.setValue(this.name, latlon)
+        VarStore.setValue(this.name, latlon);
         return latlon;
     }
 

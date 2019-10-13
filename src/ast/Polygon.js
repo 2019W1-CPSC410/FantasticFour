@@ -16,6 +16,7 @@ class Polygon {
     parse () {
         tokenizer.getAndCheckNext('polygon');
         this.name = tokenizer.getNext();
+        tokenizer.getAndCheckNext("at");
         tokenizer.getAndCheckNext('\\[');
         let latlons = [];
         while (tokenizer.checkNext() !== '\\]') {

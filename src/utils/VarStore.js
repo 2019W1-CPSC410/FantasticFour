@@ -6,7 +6,7 @@ var valueStore = new Map();
 class VarStore {
 
     static setType(name, type) {
-        typeStore.put(name, type);
+        typeStore.set(name, type);
     }
 
     static getType(name) {
@@ -18,20 +18,21 @@ class VarStore {
     }
 
     static setMapObject(name, options) {
-        mapObjectStore.put(name, options);
+        mapObjectStore.set(name, options);
     }
 
     static setValue(name, value) {
-        valueStore.put(name, value);
+        valueStore.set(name, value);
     }
 
     static getValue(name) {
-        valueStore.get(name);
+        return valueStore.get(name);
     }
 
     static clearStores() {
         typeStore = new Map();
         mapObjectStore = new Map();
+        valueStore = new Map();
     }
 }
 

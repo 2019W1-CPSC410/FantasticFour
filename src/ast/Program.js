@@ -18,6 +18,7 @@ class Program {
     }
 
     getSubStatement() {
+        console.log(tokenizer.checkNext());
         switch (tokenizer.checkNext()) {
             case 'latlon':
                 return new Latlon();
@@ -53,6 +54,7 @@ class Program {
         tokenizer.getAndCheckNext('createmap');
         while (tokenizer.moreTokens()) {
             let s = this.getSubStatement();
+            console.log(s);
             s.parse();
             this.statements.push(s);
         }
@@ -60,7 +62,7 @@ class Program {
 
     evaluate() {
         this.statements.forEach((statement) => {
-            statement.evalutate();
+            statement.evaluate();
         })
     }
 

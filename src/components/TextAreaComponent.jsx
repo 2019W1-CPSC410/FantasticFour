@@ -3,6 +3,7 @@ import MapComponent from './MapComponent';
 import { withStyles } from '@material-ui/styles';
 import Tokenizer from '../libs/Tokenizer';
 import Program from '../ast/Program';
+import VarStore from '../utils/VarStore';
 
 const styles = {
     textAreaContainer: {
@@ -43,7 +44,10 @@ class TextArea extends Component {
         event.preventDefault();
         let program = new Program();
         program.parse();
+        program.evaluate();
         // TODO: Once user clicks submit, need to restart tokenizer
+        Tokenizer.clearTokenizer();
+        VarStore.clearStores();
     }
 
     render() {

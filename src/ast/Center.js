@@ -24,6 +24,8 @@ class Center {
     }
 
     evaluate() {
+        latlon = VarStore.getValue(tokenizer.getNext());
+
         let mapStore = MapStore.getInstance();
         let center = mapStore.setCenter(this.latlon);
     }

@@ -16,6 +16,7 @@ class Polyline {
     parse () {
         tokenizer.getAndCheckNext('polyline');
         this.name = tokenizer.getNext();
+        tokenizer.getAndCheckNext("at");
         tokenizer.getAndCheckNext('\\[');
         let latlons = [];
         while (tokenizer.checkNext() !== '\\]') {

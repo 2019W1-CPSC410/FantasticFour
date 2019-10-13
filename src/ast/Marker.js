@@ -7,7 +7,7 @@ let tokenizer;
 
 class Marker {
     constructor() {
-        this.name = ''
+        this.name = '';
         this.latlon = [];
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();
