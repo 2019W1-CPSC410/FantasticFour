@@ -33,10 +33,13 @@ class Polygon {
             }
         }
         this.latlons = latlons;
-        while (tokenizer.checkNext() !== 'with') {
-            let option = new Option();
-            option.parse();
-            this.options.push(option);
+        if (tokenizer.checkNext() === 'with') {
+            // This check is needed because with is optional
+            while (tokenizer.checkNext() !== 'with') {
+                let option = new Option();
+                option.parse();
+                this.options.push(option);
+            }
         }
     }
 

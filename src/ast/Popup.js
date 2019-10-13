@@ -18,10 +18,13 @@ class Popup {
         this.name = tokenizer.getNext();
         tokenizer.getAndCheckNext('at');
         this.mapObject = VarStore.getMapObject(tokenizer.getNext());
-        while (tokenizer.checkNext() !== 'with') {
-            let option = new Option();
-            option.parse();
-            this.options.push(option);
+        if (tokenizer.checkNext() === 'with') {
+            // This check is needed because with is optional
+            while (tokenizer.checkNext() !== 'with') {
+                let option = new Option();
+                option.parse();
+                this.options.push(option);
+            }
         }
     }
 
