@@ -1,4 +1,5 @@
 import Tokenizer from '../libs/Tokenizer';
+import VarStore from '../utils/VarStore';
 
 let tokenizer;
 
@@ -19,7 +20,9 @@ class Latlon {
     }
 
     evaluate() {
-        return [this.lat, this.lon];
+        const latlon = [this.lat, this.lon];
+        VarStore.setValue(this.name, latlon)
+        return latlon;
     }
 
     setName(name) {
