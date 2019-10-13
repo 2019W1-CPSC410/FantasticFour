@@ -16,9 +16,9 @@ class Polygon {
     parse () {
         tokenizer.getAndCheckNext('polygon');
         this.name = tokenizer.getNext();
-        tokenizer.getAndCheckNext('\[');
+        tokenizer.getAndCheckNext('\\[');
         let latlons = [];
-        while (tokenizer.checkNext() !== '\]') {
+        while (tokenizer.checkNext() !== '\\]') {
             let latlon = [];
             if (!isNaN(tokenizer.checkNext())) {
                 latlon.push(tokenizer.getNext()); // lat
@@ -32,6 +32,7 @@ class Polygon {
                 tokenizer.getAndCheckNext(',');
             }
         }
+        tokenizer.getAndCheckNext('\\]');
         this.latlons = latlons;
         if (tokenizer.checkNext() === 'with') {
             // This check is needed because with is optional
