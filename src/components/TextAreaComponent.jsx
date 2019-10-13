@@ -15,7 +15,7 @@ const styles = {
 };
 
 const literals = ["create map", "end", "centered", "\\[", "\\]", ";",
-    "titled", "legend item", "marker", "polygon", ",",
+    "titled", "legend item", "marker", "polygon", ",", "link",
     "circle", "polyline", "latlon", "popup", "text", "color",
     "opacity", "with", "radius", " add ", " at ", " to ", "zoom level",
 ];
