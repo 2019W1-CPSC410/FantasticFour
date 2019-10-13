@@ -13,7 +13,7 @@ class Popup {
         // Command format: popup popupName addingToObjectName with text "popup text";
         Tokenizer.getAndCheckNext('popup');
         this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext(' at ');
+        Tokenizer.getAndCheckNext('at');
         this.mapObject = VarStore.getMapObject(Tokenizer.getNext());
         while (Tokenizer.checkNext() !== 'with') {
             let option = new Option();

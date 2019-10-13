@@ -13,7 +13,7 @@ class Circle {
     parse () {
         Tokenizer.getAndCheckNext('circle');
         this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext(' at ');
+        Tokenizer.getAndCheckNext('at');
         let latlon = [];
         if (typeof Tokenizer.checkNext() === 'number') {
             latlon.push(Tokenizer.getNext()); // lat

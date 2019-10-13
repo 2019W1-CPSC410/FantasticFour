@@ -13,7 +13,7 @@ class Marker {
     parse () {
         Tokenizer.getAndCheckNext('marker');
         this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext(' at ');
+        Tokenizer.getAndCheckNext('at');
         let latlon = [];
         if (typeof Tokenizer.checkNext() === 'number') {
             latlon.push(Tokenizer.getNext()); // lat
