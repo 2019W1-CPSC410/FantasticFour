@@ -1,23 +1,24 @@
-import MapStore from '../utils/MapStore';
-import VarStore from '../utils/VarStore';
 import Tokenizer from '../libs/Tokenizer';
 import Latlon from './Latlon';
 import Marker from './Marker';
 import Circle from './Circle';
 import Popup from './Popup';
-import Tooltip from './Tooltip';
+// import Tooltip from './Tooltip';
 import Polygon from './Polygon';
 import Polyline from './Polyline';
 import Link from './Link';
 import Center from './Center';
 
+var tokenizer;
+
 class Program {
     constructor() {
         this.statements = [];
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     getSubStatement() {
-        switch (Tokenizer.checkToken()) {
+        switch (tokenizer.checkNext()) {
             case 'latlon':
                 return new Latlon();
             case 'marker':
@@ -26,8 +27,8 @@ class Program {
                 return new Circle();
             case 'popup':
                 return new Popup();
-            case 'tooltip':
-                return new Tooltip();
+            // case 'tooltip':
+            //     return new Tooltip();
             case 'polygon':
                 return new Polygon();
             case 'polyline':
@@ -42,7 +43,8 @@ class Program {
     }
 
     parse () {
-        while (Tokenizer.moreTokens()) {
+        while (tokenizer.moreTokens()) {
+            tokenizer.getAndCheckNext('createmap');
             let s = this.getSubStatement();
             s.parse();
             this.statements.push(s);
