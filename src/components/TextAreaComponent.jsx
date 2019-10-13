@@ -43,6 +43,7 @@ class TextArea extends Component {
         event.preventDefault();
         let program = new Program();
         program.parse();
+        // TODO: Once user clicks submit, need to restart tokenizer
     }
 
     render() {
