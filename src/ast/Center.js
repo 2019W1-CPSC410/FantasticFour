@@ -2,20 +2,23 @@ import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
 import Tokenizer from '../libs/Tokenizer';
 
+let tokenizer;
+
 class Center {
     constructor() {
         this.latlon = [];
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('centered');
-        Tokenizer.getAndCheckNext(' at ');
+        tokenizer.getAndCheckNext('centered');
+        tokenizer.getAndCheckNext('at');
         let latlon = [];
-        if (typeof Tokenizer.checkNext() === 'number') {
-            latlon.push(Tokenizer.getNext()); // lat
-            latlon.push(Tokenizer.getNext()); // lon
+        if (typeof tokenizer.checkNext() === 'number') {
+            latlon.push(tokenizer.getNext()); // lat
+            latlon.push(tokenizer.getNext()); // lon
         } else {
-            latlon = VarStore.getValue(Tokenizer.getNext());
+            latlon = VarStore.getValue(tokenizer.getNext());
         }
         this.latlon = latlon;
     }
