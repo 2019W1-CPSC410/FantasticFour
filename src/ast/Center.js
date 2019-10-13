@@ -24,9 +24,8 @@ class Center {
     }
 
     evaluate() {
-        let latlon = VarStore.getType(this.latlon);
         let mapStore = MapStore.getInstance();
-        let center = mapStore.setCenter(latlon.evaluate());
+        let center = mapStore.setCenter(this.latlon);
     }
 
     setLocation(latlon) {
