@@ -37,6 +37,13 @@ class Program {
                 return new Link();
             case 'centered':
                 return new Center();
+            case 'end':
+                return {
+                    parse: () => {
+                        tokenizer.getNext();
+                        console.log('Completed successfully!');
+                    }
+                };
             default:
                 return null;
         }
