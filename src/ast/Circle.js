@@ -43,8 +43,8 @@ class Circle {
         let circle = mapStore.addCircle(
             this.latlon,
             colorOption.value,
-            opacityOption.opacity,
-            radiusOption.radius
+            opacityOption.opacity, // TODO: parse opacity value -> it's currently a string
+            radiusOption.radius, // TODO: parse radius value -> it's currently a string
         );
         if (this.name) {
             VarStore.setMapObject(this.name, circle);
