@@ -35,10 +35,14 @@ class Polygon {
         this.latlons = latlons;
         if (tokenizer.checkNext() === 'with') {
             // This check is needed because with is optional
-            while (tokenizer.checkNext() !== 'with') {
+            while (tokenizer.checkNext() === 'with') {
                 let option = new Option();
                 option.parse();
                 this.options.push(option);
+                // THis handles the termination of when to stop parsing for options
+                if (tokenizer.checkNext() !== 'with') {
+                    break;
+                }
             }
         }
     }
