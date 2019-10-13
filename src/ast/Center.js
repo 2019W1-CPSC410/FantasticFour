@@ -8,7 +8,8 @@ class Center {
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('centered at');
+        Tokenizer.getAndCheckNext('centered');
+        Tokenizer.getAndCheckNext(' at ');
         let latlon = [];
         if (typeof Tokenizer.checkNext() === 'number') {
             latlon.push(Tokenizer.getNext()); // lat

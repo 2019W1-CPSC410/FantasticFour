@@ -23,7 +23,7 @@ class TextArea extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: 'Create map',
+            text: 'create map',
             tokens: []
         };
 

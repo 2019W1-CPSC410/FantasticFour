@@ -34,7 +34,7 @@ class Program {
                 return new Polyline();
             case 'link':
                 return new Link();
-            case 'centered at':
+            case 'centered':
                 return new Center();
             default:
                 return null;
