@@ -13,10 +13,10 @@ const styles = {
     }
 };
 
-const literals = ["create map", "end", "centered at ", "\\[", "\\]", ";",
+const literals = ["create map", "end", "centered", "\\[", "\\]", ";",
     "titled", "legend item", "marker", "polygon", ",",
     "circle", "polyline", "latlon", "popup", "text", "color",
-    "opacity", "with", "radius", " add ", " at ", " to ", "zoom level ",
+    "opacity", "with", "radius", " add ", " at ", " to ", "zoom level",
 ];
 
 class TextArea extends Component {
