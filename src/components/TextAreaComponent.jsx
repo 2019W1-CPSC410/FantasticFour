@@ -38,7 +38,7 @@ class TextArea extends Component {
 
     handleSubmit(event) {
         //TODO: perform tokenization here, save to state!!
-        alert('A map was submitted: ' + this.state.text);
+        // alert('A map was submitted: ' + this.state.text);
         Tokenizer.makeTokenizer(this.state.text, literals);
         event.preventDefault();
         let program = new Program();
