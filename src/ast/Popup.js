@@ -3,19 +3,22 @@ import MapStore from '../utils/MapStore';
 import Tokenizer from '../libs/Tokenizer';
 import Option from './Option';
 
+let tokenizer;
+
 class Popup {
     constructor() {
         this.name = '';
         this.mapObject = null;
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
         // Command format: popup popupName addingToObjectName with text "popup text";
-        Tokenizer.getAndCheckNext('popup');
-        this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext('at');
-        this.mapObject = VarStore.getMapObject(Tokenizer.getNext());
-        while (Tokenizer.checkNext() !== 'with') {
+        tokenizer.getAndCheckNext('popup');
+        this.name = tokenizer.getNext();
+        tokenizer.getAndCheckNext('at');
+        this.mapObject = VarStore.getMapObject(tokenizer.getNext());
+        while (tokenizer.checkNext() !== 'with') {
             let option = new Option();
             option.parse();
             this.options.push(option);

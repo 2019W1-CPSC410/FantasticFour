@@ -1,20 +1,21 @@
-import MapStore from '../utils/MapStore';
-import VarStore from '../utils/VarStore';
 import Tokenizer from '../libs/Tokenizer';
+
+let tokenizer;
 
 class Latlon {
     constructor() {
         this.name = '';
         this.lat = 0;
         this.lon = 0;
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('latlon');
-        this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext('at');
-        this.lat = Tokenizer.getNext();
-        this.lon = Tokenizer.getNext();
+        tokenizer.getAndCheckNext('latlon');
+        this.name = tokenizer.getNext();
+        tokenizer.getAndCheckNext('at');
+        this.lat = tokenizer.getNext();
+        this.lon = tokenizer.getNext();
     }
 
     evaluate() {

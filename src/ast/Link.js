@@ -2,17 +2,20 @@ import MapStore from '../utils/MapStore';
 import VarStore from '../utils/VarStore';
 import Tokenizer from '../libs/Tokenizer';
 
+let tokenizer;
+
 class Link {
     constructor() {
-        this.first_name = "";
-        this.second_name = "";
+        this.first_name = '';
+        this.second_name = '';
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('link');
-        this.first_name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext('with');
-        this.second_name = Tokenizer.getNext();
+        tokenizer.getAndCheckNext('link');
+        this.first_name = tokenizer.getNext();
+        tokenizer.getAndCheckNext('with');
+        this.second_name = tokenizer.getNext();
     }
 
     evaluate() {

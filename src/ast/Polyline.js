@@ -3,34 +3,37 @@ import VarStore from '../utils/VarStore';
 import Option from './Option';
 import Tokenizer from '../libs/Tokenizer';
 
+let tokenizer;
+
 class Polyline {
     constructor() {
         this.name = '';
         this.latlons = [];
         this.options = [];
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('polyline');
-        this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext('[');
+        tokenizer.getAndCheckNext('polyline');
+        this.name = tokenizer.getNext();
+        tokenizer.getAndCheckNext('[');
         let latlons = [];
-        while (Tokenizer.checkNext() !== ']') {
+        while (tokenizer.checkNext() !== ']') {
             let latlon = [];
-            if (typeof Tokenizer.checkNext() === 'number') {
-                latlon.push(Tokenizer.getNext()); // lat
-                latlon.push(Tokenizer.getNext()); // lon
+            if (typeof tokenizer.checkNext() === 'number') {
+                latlon.push(tokenizer.getNext()); // lat
+                latlon.push(tokenizer.getNext()); // lon
             } else {
-                latlon = VarStore.getValue(Tokenizer.getNext());
+                latlon = VarStore.getValue(tokenizer.getNext());
             }
             latlons.push(latlon);
             // Multiple lat lons
-            if (Tokenizer.checkNext() === ',') {
-                Tokenizer.getAndCheckNext(',');
+            if (tokenizer.checkNext() === ',') {
+                tokenizer.getAndCheckNext(',');
             }
         }
         this.latlons = latlons;
-        while (Tokenizer.checkNext() !== 'with') {
+        while (tokenizer.checkNext() !== 'with') {
             let option = new Option();
             option.parse();
             this.options.push(option);

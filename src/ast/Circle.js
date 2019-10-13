@@ -3,26 +3,29 @@ import VarStore from '../utils/VarStore';
 import Tokenizer from '../libs/Tokenizer';
 import Option from './Option';
 
+let tokenizer;
+
 class Circle {
     constructor() {
         this.name = "";
         this.latlon = [];
         this.options = [];
+        tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
-        Tokenizer.getAndCheckNext('circle');
-        this.name = Tokenizer.getNext();
-        Tokenizer.getAndCheckNext('at');
+        tokenizer.getAndCheckNext('circle');
+        this.name = tokenizer.getNext();
+        tokenizer.getAndCheckNext('at');
         let latlon = [];
-        if (typeof Tokenizer.checkNext() === 'number') {
-            latlon.push(Tokenizer.getNext()); // lat
-            latlon.push(Tokenizer.getNext()); // lon
+        if (typeof tokenizer.checkNext() === 'number') {
+            latlon.push(tokenizer.getNext()); // lat
+            latlon.push(tokenizer.getNext()); // lon
         } else {
-            latlon = VarStore.getValue(Tokenizer.getNext());
+            latlon = VarStore.getValue(tokenizer.getNext());
         }
         this.latlon = latlon;
-        while (Tokenizer.checkNext() === 'with') {
+        while (tokenizer.checkNext() === 'with') {
             let option = new Option();
             option.parse();
             this.options.push(option);
