@@ -6,7 +6,7 @@ import Program from '../ast/Program';
 import VarStore from '../utils/VarStore';
 import MapStore from '../utils/MapStore'
 import L from 'leaflet';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 
 const styles = {
   pageContent: {
@@ -16,16 +16,18 @@ const styles = {
     justifyContent: 'space-around',
   },
   textAreaContainer: {
-    width: '560px',
+    width: '540px',
     height: '480px',
+    fontSize: '16px',
+    padding: '10px',
   },
   submitButton: {
     width: '560px',
     padding: '10px',
-    marginTop: '5px',
-    marginBottom: '2.5px',
+    margin: '5px',
     backgroundColor: '#0388ca',
     color: '#ffffff',
+    fontSize: '14px',
     fontWeight: 'bold',
   },
   mapContainer: {
@@ -39,10 +41,15 @@ const styles = {
     alignItems: 'center',
   },
   consoleArea: {
-    width: '560px',
-    height: '150px',
+    width: '540px',
+    height: '100px',
+    padding: '5px 10px',
     border: '1px solid #000000',
     textAlign: 'left',
+  },
+  errorText: {
+    color: '#ff0000',
+    fontSize: '14px',
   },
 };
 
@@ -140,7 +147,9 @@ class TextArea extends Component {
             </div>
           </form>
           <div className={classes.consoleArea}>
-            {this.state.error}
+            <Typography style={styles.errorText}>
+              {this.state.error}
+            </Typography>
           </div>
         </div>
       </div>
