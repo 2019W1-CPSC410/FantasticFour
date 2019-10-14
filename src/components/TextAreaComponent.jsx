@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import MapComponent from './MapComponent';
 import { withStyles } from '@material-ui/styles';
 import Tokenizer from '../libs/Tokenizer';
 import Program from '../ast/Program';
 import VarStore from '../utils/VarStore';
+import MapStore from '../utils/MapStore'
+import L from 'leaflet';
 
 const styles = {
     textAreaContainer: {
@@ -12,34 +13,57 @@ const styles = {
     },
     submitButton: {
         width: '600px'
-    }
+    },
+    mapContainer: {
+        width: '600px',
+        height: '600px',
+    },
 };
-
 const literals = ["create map", "end", "centered", "\\[", "\\]", ";",
     "titled", "legend item", "marker", "polygon", ",", "link",
     "circle", "polyline", "latlon", "popup", "text", "color",
     "opacity", "with", "radius", " add ", " at ", " to ", "zoom level",
 ];
-
 class TextArea extends Component {
     constructor(props) {
         super(props);
         this.state = {
             text: 'create map',
-            tokens: []
+            tokens: [],
+            map: null
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
+    createMap() {
+        // TODO: create AST and evaluate here from tokens passed in as props.tokens
+        // Create map L.map() returns a map object
+        let mapStore = MapStore.getInstance();
+        mapStore.setMap(L.map('map', {
+            center: [49.25, -123.12],
+            zoom: 13,
+            layers: [
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }),
+            ]
+        }));
+    }
+    componentDidMount() {
+        this.createMap();
+    }
     handleChange(event) {
         this.setState({text: event.target.value});
     }
-
     handleSubmit(event) {
         //TODO: perform tokenization here, save to state!!
         // alert('A map was submitted: ' + this.state.text);
+        let mapStore = MapStore.getInstance();
+        let map = mapStore.getMap();
+
+        // deletes the map
+        map.remove();
+        this.createMap();
         Tokenizer.makeTokenizer(this.state.text, literals);
         event.preventDefault();
         let program = new Program();
@@ -48,19 +72,12 @@ class TextArea extends Component {
         // TODO: Once user clicks submit, need to restart tokenizer
         Tokenizer.clearTokenizer();
         VarStore.clearStores();
-        // TODO: Clear map state?? We're expecting the user to modify his program
-        // in the text area to see his changes, but if we don't clear map state,
-        // when the user submits the program for 3 times, every element on the map
-        // will appear 3 times on the map.
     }
-
     render() {
         const { classes } = this.props;
         // Must set defined height for map to render
         return <div>
-            <MapComponent
-                tokens={this.state.tokens}
-            />
+            <div id="map" className={classes.mapContainer} />
             <div align={"left"}>
                 <form onSubmit={this.handleSubmit}>
                     <label>
@@ -70,14 +87,13 @@ class TextArea extends Component {
                                   className={classes.textAreaContainer}/>
                     </label>
                     <div>
-                    <input type="submit"
-                           value="Submit"
-                           className={classes.submitButton}/>
+                        <input type="submit"
+                               value="Submit"
+                               className={classes.submitButton}/>
                     </div>
                 </form>
             </div>
         </div>
     }
 }
-
 export default withStyles(styles)(TextArea);
