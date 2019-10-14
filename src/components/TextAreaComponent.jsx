@@ -104,7 +104,6 @@ class TextArea extends Component {
     this.setState({ error: '' });
     // Initiate tokenizer
     Tokenizer.makeTokenizer(this.state.text, literals);
-    // event.preventDefault();
     // Start running program
     let program = new Program();
     try {
