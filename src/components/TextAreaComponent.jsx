@@ -137,7 +137,6 @@ class TextArea extends Component {
             </label>
             <div>
               <Button
-                // variant="outlined"
                 style={styles.submitButton}
                 onClick={() => this.handleSubmit()}
               >
