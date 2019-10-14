@@ -32,7 +32,7 @@ class Circle {
                 let option = new Option();
                 option.parse();
                 this.options.push(option);
-                // THis handles the termination of when to stop parsing for options
+                // This handles the termination of when to stop parsing for options
                 if (tokenizer.checkNext() !== 'with') {
                     break;
                 }
