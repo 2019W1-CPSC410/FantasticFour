@@ -7,7 +7,8 @@ let tokenizer;
 
 class Circle {
     constructor() {
-        this.name = "";
+        this.type = 'map';
+        this.name = '';
         this.latlon = [];
         this.varuse = '';
         this.options = [];
@@ -59,6 +60,12 @@ class Circle {
         );
         if (this.name) {
             VarStore.setMapObject(this.name, circle);
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 
