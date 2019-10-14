@@ -67,16 +67,6 @@ class Popup {
         return text;
     }
 
-    typeCheck() {
-        if (VarStore.getType(this.varuse) !== 'map') {
-            throw Error('Popup: cannot bind to variable ' + this.varuse + '.');
-        }
-
-        if (this.name) {
-            VarStore.setType(this.name, this.type);
-        }
-    }
-
     nameCheck() {
         if (this.varuse && !VarStore.containsName(this.varuse)) {
             throw Error('Popup: variable ' + this.varuse + ' does not exist!');
@@ -86,6 +76,16 @@ class Popup {
         }
         if (this.name) {
             VarStore.setName(this.name);
+        }
+    }
+
+    typeCheck() {
+        if (VarStore.getType(this.varuse) !== 'map') {
+            throw Error('Popup: cannot bind to variable ' + this.varuse + '.');
+        }
+
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 
