@@ -40,6 +40,9 @@ class Tokenizer {
         tokenizedProgram = tokenizedProgram.replace(/[_]+/g, "_");
         console.log(tokenizedProgram);
         let tempTokens = tokenizedProgram.split("_");
+        if (tempTokens[tempTokens.length - 2] !== 'end') {
+            throw new Error('Missing end statement.');
+        }
         this.tokens = tempTokens.slice(1, tempTokens.length -1);
     }
 

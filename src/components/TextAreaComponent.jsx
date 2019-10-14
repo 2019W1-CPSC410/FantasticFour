@@ -103,11 +103,11 @@ class TextArea extends Component {
     map.remove();
     this.createMap();
     this.setState({ console: '' });
-    // Initiate tokenizer
-    Tokenizer.makeTokenizer(this.state.text, literals);
-    // Start running program
-    let program = new Program();
     try {
+      // Initiate tokenizer
+      Tokenizer.makeTokenizer(this.state.text, literals);
+      // Start running program
+      let program = new Program();
       program.parse();
       program.evaluate();
       this.setState({ console: 'Success!' });
