@@ -7,27 +7,32 @@ let tokenizer;
 class Center {
     constructor() {
         this.latlon = [];
+        this.varuse = '';
         tokenizer = Tokenizer.getTokenizer();
     }
 
     parse () {
         tokenizer.getAndCheckNext('centered');
         tokenizer.getAndCheckNext('at');
-        let latlon = [];
         if (!isNaN(tokenizer.checkNext())) {
+            let latlon = [];
             latlon.push(tokenizer.getNext()); // lat
             latlon.push(tokenizer.getNext()); // lon
+            this.latlon = latlon;
         } else {
-            latlon = VarStore.getValue(tokenizer.getNext());
+            this.varuse = tokenizer.getNext();
         }
-        this.latlon = latlon;
     }
 
     evaluate() {
-        latlon = VarStore.getValue(tokenizer.getNext());
+        let location = this.latlon;
+
+        if (this.varuse) {
+            location = VarStore.getValue(this.varuse);
+        }
 
         let mapStore = MapStore.getInstance();
-        let center = mapStore.setCenter(this.latlon);
+        let center = mapStore.setCenter(location);
     }
 
     setLocation(latlon) {
