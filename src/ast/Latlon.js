@@ -14,7 +14,6 @@ class Latlon {
     parse () {
         tokenizer.getAndCheckNext('latlon');
         this.name = tokenizer.getNext();
-        tokenizer.getAndCheckNext('at');
         this.lat = tokenizer.getNext();
         this.lon = tokenizer.getNext();
     }
