@@ -50,6 +50,10 @@ class Tokenizer {
         return "NO_MORE_TOKENS";
     }
 
+    checkCurrent() {
+        return this.tokens[this.currentToken];
+    }
+
     getNext() {
         let token = "NULLTOKEN";
         if (this.currentToken < this.tokens.length) {
