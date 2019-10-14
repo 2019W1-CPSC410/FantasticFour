@@ -46,6 +46,10 @@ const styles = {
     border: '1px solid #000000',
     textAlign: 'left',
   },
+  successText: {
+    color: '#008000',
+    fontSize: '14px',
+  },
   errorText: {
     color: '#ff0000',
     fontSize: '14px',
@@ -63,7 +67,7 @@ class TextArea extends Component {
         text: 'create map',
         tokens: [],
         map: null,
-        error: '',
+        console: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -98,7 +102,7 @@ class TextArea extends Component {
     let map = mapStore.getMap();
     map.remove();
     this.createMap();
-    this.setState({ error: '' });
+    this.setState({ console: '' });
     // Initiate tokenizer
     Tokenizer.makeTokenizer(this.state.text, literals);
     // Start running program
@@ -106,8 +110,9 @@ class TextArea extends Component {
     try {
       program.parse();
       program.evaluate();
+      this.setState({ console: 'Success!' });
     } catch (error) {
-      this.setState({ error: error.message });
+      this.setState({ console: error.message });
     }
     // Once user clicks submit, need to:
     // 1. Restart tokenizer (Have pointer pointing to beginning again)
@@ -118,6 +123,7 @@ class TextArea extends Component {
 
   render() {
     const { classes } = this.props;
+    const { console } = this.state;
     // Must set defined height for map to render
     return (
       <div className={classes.pageContent}>
@@ -142,8 +148,8 @@ class TextArea extends Component {
             </div>
           </form>
           <div className={classes.consoleArea}>
-            <Typography style={styles.errorText}>
-              {this.state.error}
+            <Typography style={console === 'Success!' ? styles.successText : styles.errorText}>
+              {console}
             </Typography>
           </div>
         </div>
