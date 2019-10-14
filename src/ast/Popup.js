@@ -41,16 +41,13 @@ class Popup {
                     break;
                 }
             }
+        } else {
+            throw new Error('No text option specified for popup.');
         }
     }
 
     evaluate() {
         const textOption = this.options.find(option => option.type === 'text');
-
-        if (!textOption) {
-            alert('No text option specified for popup.');
-            return;
-        }
 
         const text = textOption.value;
 
