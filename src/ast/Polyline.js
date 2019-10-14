@@ -51,7 +51,7 @@ class Polyline {
 
     nameCheck() {
         this.latlons.forEach((latlon) => {
-            if (isNaN(latlon) && !VarStore.containsName(latlon)) {
+            if (!Array.isArray(latlon) && !VarStore.containsName(latlon)) {
                 throw Error('Polyline: variable ' + latlon + ' does not exist!');
             }
         });
