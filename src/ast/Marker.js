@@ -9,6 +9,7 @@ class Marker {
     constructor() {
         this.name = '';
         this.latlon = [];
+        this.varuse = '';
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();
     }
@@ -17,21 +18,21 @@ class Marker {
         tokenizer.getAndCheckNext('marker');
         this.name = tokenizer.getNext();
         tokenizer.getAndCheckNext('at');
-        let latlon = [];
         if (!isNaN(tokenizer.checkNext())) {
+            let latlon = [];
             latlon.push(tokenizer.getNext()); // lat
             latlon.push(tokenizer.getNext()); // lon
+            this.latlon = latlon;
         } else {
-            latlon = VarStore.getValue(tokenizer.getNext());
+            this.varuse = tokenizer.getNext(); // variable
         }
-        this.latlon = latlon;
         if (tokenizer.checkNext() === 'with') {
             // This check is needed because with is optional
             while (tokenizer.checkNext() === 'with') {
                 let option = new Option();
                 option.parse();
                 this.options.push(option);
-                // THis handles the termination of when to stop parsing for options
+                // This handles the termination of when to stop parsing for options
                 if (tokenizer.checkNext() !== 'with') {
                     break;
                 }
@@ -40,8 +41,14 @@ class Marker {
     }
 
     evaluate() {
+        let location = this.latlon;
+
+        if (this.varuse) {
+            location = VarStore.getValue(this.varuse);
+        }
+
         let mapStore = MapStore.getInstance();
-        let marker = mapStore.addMarker(this.latlon);
+        let marker = mapStore.addMarker(location);
         if (this.name) {
             VarStore.setMapObject(this.name, marker);
         }
