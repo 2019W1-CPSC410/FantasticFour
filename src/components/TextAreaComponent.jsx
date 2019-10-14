@@ -109,6 +109,7 @@ class TextArea extends Component {
     let program = new Program();
     try {
       program.parse();
+      program.nameCheck();
       program.evaluate();
       this.setState({ console: 'Success!' });
     } catch (error) {

@@ -18,6 +18,15 @@ class Link {
         this.second_location = tokenizer.getNext(); // variable
     }
 
+    nameCheck() {
+        if (this.first_location && !VarStore.containsName(this.first_location)) {
+            throw Error('Link: variable ' + this.first_location + ' does not exist!');
+        }
+        if (this.second_location && !VarStore.containsName(this.second_location)) {
+            throw Error('Link: variable ' + this.second_location + ' does not exist!');
+        }
+    }
+
     evaluate() {
         let mapStore = MapStore.getInstance();
         let first_object = VarStore.getMapObject(this.first_location);
