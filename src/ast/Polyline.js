@@ -25,7 +25,7 @@ class Polyline {
                 latlon.push(tokenizer.getNext()); // lat
                 latlon.push(tokenizer.getNext()); // lon
             } else {
-                latlon = VarStore.getValue(tokenizer.getNext());
+                latlon = tokenizer.getNext();
             }
             latlons.push(latlon);
             // Multiple lat lons
