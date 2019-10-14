@@ -65,8 +65,12 @@ class Program {
         while (tokenizer.moreTokens()) {
             let s = this.getSubStatement();
             console.log(s);
-            s.parse();
-            this.statements.push(s);
+            if (s) {
+                s.parse();
+                this.statements.push(s);
+            } else {
+                throw new Error(`Unexpected token: ${tokenizer.checkCurrent()}`)
+            }
         }
     }
 
