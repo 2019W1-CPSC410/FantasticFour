@@ -8,6 +8,7 @@ let tokenizer;
 class Polyline {
     constructor() {
         this.name = '';
+        this.type = 'map';
         this.latlons = [];
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();
@@ -46,6 +47,12 @@ class Polyline {
                     break;
                 }
             }
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 
