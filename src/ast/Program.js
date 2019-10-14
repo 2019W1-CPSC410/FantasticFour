@@ -38,12 +38,22 @@ class Program {
                 return new Link();
             case 'centered':
                 return new Center();
+            // Need 'end' case because otherwise for this case:
+            //  create map
+            //  latlon richmond at 49.1817 -123.1351
+            //  centered at richmond
+            // Tokenizer will get rid of the last element (richmond), since
+            // the last word is expected to be a static literal that has
+            // underscores surrounding it, but since it's a var, it doesn't.
             case 'end':
                 return {
                     parse: () => {
                         tokenizer.getNext();
-                        console.log('Completed successfully!');
-                    }
+                        console.log('Parse routine has completed successfully!');
+                    },
+                    evaluate: () => {
+                        console.log('Evaluation routine has completed successfully!');
+                    },
                 };
             default:
                 return null;
