@@ -20,7 +20,7 @@ class Center {
             latlon.push(tokenizer.getNext()); // lon
             this.latlon = latlon;
         } else {
-            this.varuse = tokenizer.getNext();
+            this.varuse = tokenizer.getNext(); // variable
         }
     }
 
