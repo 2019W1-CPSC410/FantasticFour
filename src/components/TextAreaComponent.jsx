@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MapComponent from './MapComponent';
 import { withStyles } from '@material-ui/styles';
 import Tokenizer from '../libs/Tokenizer';
 import Program from '../ast/Program';
@@ -52,13 +51,11 @@ const styles = {
     fontSize: '14px',
   },
 };
-
 const literals = ["create map", "end", "centered", "\\[", "\\]", ";",
   "titled", "legend item", "marker", "polygon", ",", "link",
   "circle", "polyline", "latlon", "popup", "text", "color",
   "opacity", "with", "radius", " add ", " at ", " to ", "zoom level",
 ];
-
 class TextArea extends Component {
   constructor(props) {
     super(props);
