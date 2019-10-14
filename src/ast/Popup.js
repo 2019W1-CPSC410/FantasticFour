@@ -48,7 +48,7 @@ class Popup {
         const textOption = this.options.find(option => option.type === 'text');
 
         if (!textOption) {
-            alert('Did not specify text option for popup.');
+            alert('No text option specified for popup.');
             return;
         }
 
