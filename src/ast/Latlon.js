@@ -6,6 +6,7 @@ let tokenizer;
 class Latlon {
     constructor() {
         this.name = '';
+        this.type = 'latlon';
         this.lat = 0;
         this.lon = 0;
         tokenizer = Tokenizer.getTokenizer();
@@ -29,6 +30,12 @@ class Latlon {
             throw Error('Latlon: variable ' + this.name + ' already exists!');
         } else if (this.name) {
             VarStore.setName(this.name);
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 

@@ -27,6 +27,20 @@ class Link {
         }
     }
 
+    typeCheck() {
+        if (VarStore.getType(this.first_location) !== 'map') {
+            throw Error('Link: variable ' + this.first_location + ' cannot be be linked.')
+        }
+
+        if (VarStore.getType(this.second_location) !== 'map') {
+            throw Error('Link: variable ' + this.second_location + ' cannot be be linked.')
+        }
+
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
+        }
+    }
+
     evaluate() {
         let mapStore = MapStore.getInstance();
         let first_object = VarStore.getMapObject(this.first_location);

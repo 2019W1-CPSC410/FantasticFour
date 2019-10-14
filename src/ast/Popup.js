@@ -8,6 +8,7 @@ let tokenizer;
 class Popup {
     constructor() {
         this.name = '';
+        this.type = 'object';
         this.latlon = [];
         this.varuse = '';
         this.options = [];
@@ -72,6 +73,16 @@ class Popup {
         }
         if (this.name) {
             VarStore.setName(this.name);
+        }
+    }
+
+    typeCheck() {
+        if (VarStore.getType(this.varuse) !== 'map') {
+            throw Error('Popup: cannot bind to variable ' + this.varuse + '.');
+        }
+
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 

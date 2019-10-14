@@ -57,6 +57,9 @@ class Program {
                     nameCheck: () => {
                         console.log('Name check routine has completed successfully!');
                     },
+                    typeCheck: () => {
+                        console.log('Type check routine has completed successfully!');
+                    },
                 };
             default:
                 return null;
@@ -80,6 +83,12 @@ class Program {
     nameCheck() {
         this.statements.forEach((statement) => {
             statement.nameCheck();
+        })
+    }
+
+    typeCheck() {
+        this.statements.forEach((statement) => {
+            statement.typeCheck();
         })
     }
 

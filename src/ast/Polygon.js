@@ -8,6 +8,7 @@ let tokenizer;
 class Polygon {
     constructor() {
         this.name = '';
+        this.type = 'map';
         this.latlons = [];
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();
@@ -60,6 +61,12 @@ class Polygon {
         }
         if (this.name) {
             VarStore.setName(this.name);
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 

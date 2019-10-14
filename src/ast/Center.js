@@ -6,6 +6,7 @@ let tokenizer;
 
 class Center {
     constructor() {
+        this.type = 'center';
         this.latlon = [];
         this.varuse = '';
         tokenizer = Tokenizer.getTokenizer();
@@ -28,6 +29,10 @@ class Center {
         if (this.varuse && !VarStore.containsName(this.varuse)) {
             throw Error('Center: variable ' + this.varuse + ' does not exist!');
         }
+    }
+
+    typeCheck() {
+        VarStore.setType('center', this.type);
     }
 
     evaluate() {
