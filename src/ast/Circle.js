@@ -9,6 +9,7 @@ class Circle {
     constructor() {
         this.name = "";
         this.latlon = [];
+        this.varuse = '';
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();
     }
@@ -17,14 +18,14 @@ class Circle {
         tokenizer.getAndCheckNext('circle');
         this.name = tokenizer.getNext();
         tokenizer.getAndCheckNext('at');
-        let latlon = [];
         if (!isNaN(tokenizer.checkNext())) {
+            let latlon = [];
             latlon.push(tokenizer.getNext()); // lat
             latlon.push(tokenizer.getNext()); // lon
+            this.latlon = latlon;
         } else {
-            latlon = VarStore.getValue(tokenizer.getNext());
+            this.varuse = tokenizer.getNext(); // variable
         }
-        this.latlon = latlon;
         if (tokenizer.checkNext() === 'with') {
             // This check is needed because with is optional
             while (tokenizer.checkNext() === 'with') {
@@ -40,15 +41,21 @@ class Circle {
     }
 
     evaluate() {
+        let location = this.latlon;
+
+        if (this.varuse) {
+            location = VarStore.getValue(this.varuse);
+        }
+
         const colorOption = this.options.find(option => option.type === 'color') || {};
         const opacityOption = this.options.find(option => option.type === 'opacity') || {};
         const radiusOption = this.options.find(option => option.type === 'radius') || {};
         let mapStore = MapStore.getInstance();
         let circle = mapStore.addCircle(
-            this.latlon,
+            location,
             colorOption.value,
-            opacityOption.opacity, // TODO: parse opacity value -> it's currently a string
-            radiusOption.radius, // TODO: parse radius value -> it's currently a string
+            opacityOption.value, // TODO: parse opacity value -> it's currently a string
+            radiusOption.value, // TODO: parse radius value -> it's currently a string
         );
         if (this.name) {
             VarStore.setMapObject(this.name, circle);
