@@ -22,22 +22,22 @@ class MapStore {
     }
 
     addMarker(latlon) {
-        L.marker(latlon).addTo(this.map)
+        return L.marker(latlon).addTo(this.map)
     }
 
     addPolygon(latlons, color='blue', opacity=0.5) {
-        L.polygon(latlons, {
+        return L.polygon(latlons, {
             color: color,
             fillOpacity: opacity
         }).addTo(this.map)
     }
 
     addPolyline(latlons, color='green') {
-        L.polyline(latlons, {color: color}).addTo(this.map);
+        return L.polyline(latlons, {color: color}).addTo(this.map);
     }
 
     addCircle(latlon, color='red', opacity=0.5, radius=50) {
-        L.circle(latlon, {
+        return L.circle(latlon, {
             radius: radius,
             color: color,
             fillOpacity: opacity
@@ -45,7 +45,11 @@ class MapStore {
     }
 
     addPopup(mapObject, text) {
-        mapObject.bindPopup(text).openPopup();
+        return mapObject.bindPopup("<p>" + text + "</p>").openPopup();
+    }
+
+    setCenter(latlon) {
+        return this.map.setView(latlon, this.map.getZoom());
     }
 }
 

@@ -5,9 +5,9 @@ import Option from './Option';
 
 let tokenizer;
 
-class Marker {
+class Circle {
     constructor() {
-        this.name = '';
+        this.name = "";
         this.latlon = [];
         this.varuse = '';
         this.options = [];
@@ -15,7 +15,7 @@ class Marker {
     }
 
     parse () {
-        tokenizer.getAndCheckNext('marker');
+        tokenizer.getAndCheckNext('circle');
         this.name = tokenizer.getNext();
         tokenizer.getAndCheckNext('at');
         if (!isNaN(tokenizer.checkNext())) {
@@ -47,10 +47,18 @@ class Marker {
             location = VarStore.getValue(this.varuse);
         }
 
+        const colorOption = this.options.find(option => option.type === 'color') || {};
+        const opacityOption = this.options.find(option => option.type === 'opacity') || {};
+        const radiusOption = this.options.find(option => option.type === 'radius') || {};
         let mapStore = MapStore.getInstance();
-        let marker = mapStore.addMarker(location);
+        let circle = mapStore.addCircle(
+            location,
+            colorOption.value,
+            opacityOption.value, // TODO: parse opacity value -> it's currently a string
+            radiusOption.value, // TODO: parse radius value -> it's currently a string
+        );
         if (this.name) {
-            VarStore.setMapObject(this.name, marker);
+            VarStore.setMapObject(this.name, circle);
         }
     }
 
@@ -61,6 +69,19 @@ class Marker {
     setName(name) {
         this.name = name;
     }
+
+    setRadius(radius) {
+        this.radius = radius;
+    }
+
+    setColor(color) {
+        this.color = color;
+    }
+
+    setOpacity(opacity) {
+        this.opacity = opacity;
+    }
 }
 
-export { Marker as default}
+export { Circle as default}
+

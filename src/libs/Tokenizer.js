@@ -31,7 +31,7 @@ class Tokenizer {
             console.log(tokenizedProgram);
         });
         //TODO: Below will make lat and lon hard to distinguish?? may need comma between them??
-        tokenizedProgram = tokenizedProgram.replace(/ /g, "");
+        tokenizedProgram = tokenizedProgram.replace(/[ ]+/g, "");
 
         texts.forEach((text) => {
             tokenizedProgram = tokenizedProgram.replace(/\$/, text);
@@ -83,6 +83,10 @@ class Tokenizer {
         if (!theTokenizer) {
             theTokenizer = new Tokenizer(program, literals);
         }
+    }
+
+    static clearTokenizer() {
+        theTokenizer = null;
     }
 
     static getTokenizer() {
