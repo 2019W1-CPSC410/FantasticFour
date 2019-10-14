@@ -48,6 +48,10 @@ class TextArea extends Component {
         // TODO: Once user clicks submit, need to restart tokenizer
         Tokenizer.clearTokenizer();
         VarStore.clearStores();
+        // TODO: Clear map state?? We're expecting the user to modify his program
+        // in the text area to see his changes, but if we don't clear map state,
+        // when the user submits the program for 3 times, every element on the map
+        // will appear 3 times on the map.
     }
 
     render() {
