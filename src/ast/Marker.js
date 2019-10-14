@@ -8,6 +8,7 @@ let tokenizer;
 class Marker {
     constructor() {
         this.name = '';
+        this.type = 'map';
         this.latlon = [];
         this.varuse = '';
         this.options = [];
@@ -51,6 +52,12 @@ class Marker {
         let marker = mapStore.addMarker(location);
         if (this.name) {
             VarStore.setMapObject(this.name, marker);
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 
