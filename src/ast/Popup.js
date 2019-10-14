@@ -46,6 +46,12 @@ class Popup {
 
     evaluate() {
         const textOption = this.options.find(option => option.type === 'text');
+
+        if (!textOption) {
+            alert('Did not specify text option for popup.');
+            return;
+        }
+
         const text = textOption.value;
 
         const mapObject = VarStore.getMapObject(this.varuse);
