@@ -62,6 +62,18 @@ class Circle {
         }
     }
 
+    nameCheck() {
+        if (this.varuse && !VarStore.containsName(this.varuse)) {
+            throw Error('Circle: variable ' + this.varuse + ' does not exist!');
+        }
+        if (this.name && VarStore.containsName(this.name)) {
+            throw Error('Circle: name ' + this.name + ' already exists!');
+        }
+        if (this.name) {
+            VarStore.setName(this.name);
+        }
+    }
+
     setLocation(latlon) {
         this.latlon = latlon[0];
     }

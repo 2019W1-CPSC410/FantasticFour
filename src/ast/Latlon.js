@@ -24,6 +24,14 @@ class Latlon {
         return latlon;
     }
 
+    nameCheck() {
+        if (this.name && VarStore.containsName(this.name)) {
+            throw Error('Latlon: variable ' + this.name + ' already exists!');
+        } else if (this.name) {
+            VarStore.setName(this.name);
+        }
+    }
+
     setName(name) {
         this.name = name;
     }

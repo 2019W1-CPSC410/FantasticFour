@@ -66,6 +66,18 @@ class Popup {
         return text;
     }
 
+    nameCheck() {
+        if (this.varuse && !VarStore.containsName(this.varuse)) {
+            throw Error('Popup: variable ' + this.varuse + ' does not exist!');
+        }
+        if (this.name && VarStore.containsName(this.name)) {
+            throw Error('Popup: name ' + this.name + ' already exists!');
+        }
+        if (this.name) {
+            VarStore.setName(this.name);
+        }
+    }
+
     setName(name) {
         this.name = name;
     }

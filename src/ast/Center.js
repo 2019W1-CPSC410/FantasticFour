@@ -24,6 +24,12 @@ class Center {
         }
     }
 
+    nameCheck() {
+        if (this.varuse && !VarStore.containsName(this.varuse)) {
+            throw Error('Center: variable ' + this.varuse + ' does not exist!');
+        }
+    }
+
     evaluate() {
         let location = this.latlon;
 

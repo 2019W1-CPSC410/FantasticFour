@@ -54,6 +54,9 @@ class Program {
                     evaluate: () => {
                         console.log('Evaluation routine has completed successfully!');
                     },
+                    nameCheck: () => {
+                        console.log('Name check routine has completed successfully!');
+                    },
                 };
             default:
                 return null;
@@ -72,6 +75,12 @@ class Program {
                 throw new Error(`Unexpected token: ${tokenizer.checkCurrent()}`)
             }
         }
+    }
+
+    nameCheck() {
+        this.statements.forEach((statement) => {
+            statement.nameCheck();
+        })
     }
 
     evaluate() {

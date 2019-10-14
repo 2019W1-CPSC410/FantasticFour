@@ -49,6 +49,20 @@ class Polygon {
         }
     }
 
+    nameCheck() {
+        this.latlons.forEach((latlon) => {
+            if (isNaN(latlon) && !VarStore.containsName(latlon)) {
+                throw Error('Polygon: variable ' + latlon + ' does not exist!');
+            }
+        });
+        if (this.name && VarStore.containsName(this.name)) {
+            throw Error('Polygon: name ' + this.name + ' already exists!');
+        }
+        if (this.name) {
+            VarStore.setName(this.name);
+        }
+    }
+
     evaluate() {
         let mapStore = MapStore.getInstance();
 

@@ -2,6 +2,7 @@
 var typeStore = new Map();
 var mapObjectStore = new Map();
 var valueStore = new Map();
+var nameStore = [];
 
 class VarStore {
 
@@ -29,10 +30,19 @@ class VarStore {
         return valueStore.get(name);
     }
 
+    static setName(name) {
+        nameStore.push(name);
+    }
+
+    static containsName(name) {
+        return nameStore.includes(name);
+    }
+
     static clearStores() {
         typeStore = new Map();
         mapObjectStore = new Map();
         valueStore = new Map();
+        nameStore = [];
     }
 }
 
