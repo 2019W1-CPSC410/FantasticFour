@@ -4,80 +4,147 @@ import { withStyles } from '@material-ui/styles';
 import Tokenizer from '../libs/Tokenizer';
 import Program from '../ast/Program';
 import VarStore from '../utils/VarStore';
+import MapStore from '../utils/MapStore'
+import L from 'leaflet';
+import { Button } from '@material-ui/core';
 
 const styles = {
-    textAreaContainer: {
-        width: '600px',
-        height: '200px',
-    },
-    submitButton: {
-        width: '600px'
-    }
+  pageContent: {
+    padding: '20px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  textAreaContainer: {
+    width: '560px',
+    height: '480px',
+  },
+  submitButton: {
+    width: '560px',
+    padding: '10px',
+    marginTop: '5px',
+    marginBottom: '2.5px',
+    backgroundColor: '#0388ca',
+    color: '#ffffff',
+    fontWeight: 'bold',
+  },
+  mapContainer: {
+    width: '600px',
+    height: '700px',
+  },
+  development: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  consoleArea: {
+    width: '560px',
+    height: '150px',
+    border: '1px solid #000000',
+    textAlign: 'left',
+  },
 };
 
 const literals = ["create map", "end", "centered", "\\[", "\\]", ";",
-    "titled", "legend item", "marker", "polygon", ",", "link",
-    "circle", "polyline", "latlon", "popup", "text", "color",
-    "opacity", "with", "radius", " add ", " at ", " to ", "zoom level",
+  "titled", "legend item", "marker", "polygon", ",", "link",
+  "circle", "polyline", "latlon", "popup", "text", "color",
+  "opacity", "with", "radius", " add ", " at ", " to ", "zoom level",
 ];
 
 class TextArea extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: 'create map',
-            tokens: []
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+        text: 'create map',
+        tokens: [],
+        map: null,
+        error: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+  createMap() {
+    // TODO: create AST and evaluate here from tokens passed in as props.tokens
+    // Create map L.map() returns a map object
+    let mapStore = MapStore.getInstance();
+    mapStore.setMap(L.map('map', {
+      center: [49.25, -123.12],
+      zoom: 13,
+      layers: [
+          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          }),
+      ],
+    }));
+  }
+
+  componentDidMount() {
+    this.createMap();
+  }
+
+  handleChange(event) {
+    this.setState({ text: event.target.value });
+  }
+
+  handleSubmit() {
+    // Clear map state and reset error state
+    let mapStore = MapStore.getInstance();
+    let map = mapStore.getMap();
+    map.remove();
+    this.createMap();
+    this.setState({ error: '' });
+    // Initiate tokenizer
+    Tokenizer.makeTokenizer(this.state.text, literals);
+    // event.preventDefault();
+    // Start running program
+    let program = new Program();
+    try {
+      program.parse();
+      program.evaluate();
+    } catch (error) {
+      this.setState({ error: error.message });
     }
+    // Once user clicks submit, need to:
+    // 1. Restart tokenizer (Have pointer pointing to beginning again)
+    // 2. Reset variables
+    Tokenizer.clearTokenizer();
+    VarStore.clearStores();
+  }
 
-    handleChange(event) {
-        this.setState({text: event.target.value});
-    }
-
-    handleSubmit(event) {
-        //TODO: perform tokenization here, save to state!!
-        // alert('A map was submitted: ' + this.state.text);
-        Tokenizer.makeTokenizer(this.state.text, literals);
-        event.preventDefault();
-        let program = new Program();
-        program.parse();
-        program.evaluate();
-        // TODO: Once user clicks submit, need to restart tokenizer
-        Tokenizer.clearTokenizer();
-        VarStore.clearStores();
-        // TODO: Clear map state?? We're expecting the user to modify his program
-        // in the text area to see his changes, but if we don't clear map state,
-        // when the user submits the program for 3 times, every element on the map
-        // will appear 3 times on the map.
-    }
-
-    render() {
-        const { classes } = this.props;
-        // Must set defined height for map to render
-        return <div>
-            <MapComponent
-                tokens={this.state.tokens}
-            />
-            <div align={"left"}>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        <textarea value={this.state.text}
-                                  onChange={this.handleChange}
-                                  id="textArea"
-                                  className={classes.textAreaContainer}/>
-                    </label>
-                    <div>
-                    <input type="submit"
-                           value="Submit"
-                           className={classes.submitButton}/>
-                    </div>
-                </form>
+  render() {
+    const { classes } = this.props;
+    // Must set defined height for map to render
+    return (
+      <div className={classes.pageContent}>
+        <div id="map" className={classes.mapContainer} />
+        <div className={classes.development}>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <textarea
+                value={this.state.text}
+                onChange={this.handleChange}
+                id="textArea"
+                className={classes.textAreaContainer}
+              />
+            </label>
+            <div>
+              <Button
+                // variant="outlined"
+                style={styles.submitButton}
+                onClick={() => this.handleSubmit()}
+              >
+                SUBMIT
+              </Button>
             </div>
+          </form>
+          <div className={classes.consoleArea}>
+            {this.state.error}
+          </div>
         </div>
-    }
+      </div>
+    );
+  }
 }
-
 export default withStyles(styles)(TextArea);
