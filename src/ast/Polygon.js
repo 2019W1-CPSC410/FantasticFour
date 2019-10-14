@@ -50,12 +50,6 @@ class Polygon {
         }
     }
 
-    typeCheck() {
-        if (this.name) {
-            VarStore.setType(this.name, this.type);
-        }
-    }
-
     nameCheck() {
         this.latlons.forEach((latlon) => {
             if (isNaN(latlon) && !VarStore.containsName(latlon)) {
@@ -67,6 +61,12 @@ class Polygon {
         }
         if (this.name) {
             VarStore.setName(this.name);
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 

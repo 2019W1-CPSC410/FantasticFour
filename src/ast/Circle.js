@@ -63,12 +63,6 @@ class Circle {
         }
     }
 
-    typeCheck() {
-        if (this.name) {
-            VarStore.setType(this.name, this.type);
-        }
-    }
-
     nameCheck() {
         if (this.varuse && !VarStore.containsName(this.varuse)) {
             throw Error('Circle: variable ' + this.varuse + ' does not exist!');
@@ -78,6 +72,12 @@ class Circle {
         }
         if (this.name) {
             VarStore.setName(this.name);
+        }
+    }
+
+    typeCheck() {
+        if (this.name) {
+            VarStore.setType(this.name, this.type);
         }
     }
 
