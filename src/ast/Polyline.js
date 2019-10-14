@@ -51,9 +51,12 @@ class Polyline {
 
     evaluate() {
         let mapStore = MapStore.getInstance();
-        let latlons = [];
-        this.latlons.forEach((latlon) => {
-            latlons.push(latlon);
+
+        const latlons = this.latlons.map((latlon) => {
+            if (typeof latlon === 'string') {
+                return VarStore.getValue(latlon);
+            }
+            return latlon;
         });
 
         const colorOption = this.options.find(option => option.type === 'color') || {};
