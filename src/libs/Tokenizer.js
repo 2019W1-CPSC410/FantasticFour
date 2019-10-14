@@ -18,8 +18,8 @@ class Tokenizer {
 
         // extracts replacing them with _$_, stores them in an array
         // to be added back in later.
-        var texts = [...tokenizedProgram.matchAll(/".*"/g)];
-        tokenizedProgram = tokenizedProgram.replace(/".*"/g, "_$_");
+        var texts = [...tokenizedProgram.matchAll(/"[^"]*"/g)];
+        tokenizedProgram = tokenizedProgram.replace(/"[^"]*"/g, "_$_");
 
         // prevents leading 'lat' in lat lon from combining with variable name token
         tokenizedProgram = tokenizedProgram.replace(/[-]*\d+\.\d+/g, function(m){ return "_" + m + "_"; });
