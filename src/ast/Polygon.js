@@ -16,7 +16,7 @@ class Polygon {
     parse () {
         tokenizer.getAndCheckNext('polygon');
         this.name = tokenizer.getNext();
-        tokenizer.getAndCheckNext("at");
+        tokenizer.getAndCheckNext('at');
         tokenizer.getAndCheckNext('\\[');
         let latlons = [];
         while (tokenizer.checkNext() !== '\\]') {
@@ -41,7 +41,7 @@ class Polygon {
                 let option = new Option();
                 option.parse();
                 this.options.push(option);
-                // THis handles the termination of when to stop parsing for options
+                // This handles the termination of when to stop parsing for options
                 if (tokenizer.checkNext() !== 'with') {
                     break;
                 }
@@ -51,9 +51,12 @@ class Polygon {
 
     evaluate() {
         let mapStore = MapStore.getInstance();
-        let latlons = [];
-        this.latlons.forEach((latlon) => {
-            latlons.push(latlon);
+
+        const latlons = this.latlons.map((latlon) => {
+            if (typeof latlon === 'string') {
+                return VarStore.getValue(latlon);
+            }
+            return latlon;
         });
 
         const colorOption = this.options.find(option => option.type === 'color') || {};
