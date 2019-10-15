@@ -8,7 +8,7 @@ let tokenizer;
 class Polyline {
     constructor() {
         this.name = '';
-        this.type = 'map';
+        this.type = 'map-multi';
         this.latlons = [];
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();

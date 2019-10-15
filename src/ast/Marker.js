@@ -8,7 +8,7 @@ let tokenizer;
 class Marker {
     constructor() {
         this.name = '';
-        this.type = 'map';
+        this.type = 'map-single';
         this.latlon = [];
         this.varuse = '';
         this.options = [];

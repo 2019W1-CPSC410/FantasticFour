@@ -7,7 +7,7 @@ let tokenizer;
 
 class Circle {
     constructor() {
-        this.type = 'map';
+        this.type = 'map-single';
         this.name = '';
         this.latlon = [];
         this.varuse = '';

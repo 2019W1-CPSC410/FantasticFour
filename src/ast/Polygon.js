@@ -8,7 +8,7 @@ let tokenizer;
 class Polygon {
     constructor() {
         this.name = '';
-        this.type = 'map';
+        this.type = 'map-multi';
         this.latlons = [];
         this.options = [];
         tokenizer = Tokenizer.getTokenizer();
