@@ -6,6 +6,7 @@ let tokenizer;
 
 class Link {
     constructor() {
+        this.type = 'link';
         this.first_location = '';
         this.second_location = '';
         tokenizer = Tokenizer.getTokenizer();
@@ -28,11 +29,11 @@ class Link {
     }
 
     typeCheck() {
-        if (VarStore.getType(this.first_location) !== 'map') {
+        if (VarStore.getType(this.first_location) !== 'map-single') {
             throw Error('Link: variable ' + this.first_location + ' cannot be be linked.')
         }
 
-        if (VarStore.getType(this.second_location) !== 'map') {
+        if (VarStore.getType(this.second_location) !== 'map-single') {
             throw Error('Link: variable ' + this.second_location + ' cannot be be linked.')
         }
 

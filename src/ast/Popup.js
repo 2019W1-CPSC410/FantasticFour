@@ -77,7 +77,7 @@ class Popup {
     }
 
     typeCheck() {
-        if (VarStore.getType(this.varuse) !== 'map') {
+        if (VarStore.getType(this.varuse) !== 'map-single' || VarStore.getType(this.varuse) !== 'map-multi') {
             throw Error('Popup: cannot bind to variable ' + this.varuse + '.');
         }
 
